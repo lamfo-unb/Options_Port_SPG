@@ -187,10 +187,10 @@ class OptinsBases:
         for d in kdate:
             Mercado3c=Mercado2c[Mercado2c.Date.astype('datetime64')==d]#.sort_values('PriceToStrike0')
             Mercado3c=Mercado3c[Mercado3c.dia_1!=Mercado3c.Date]
-            Mercado3c=Mercado3c.append(pd.DataFrame(np.zeros(((self.numselfc-len(Mercado3c)),len(Mercado3c.columns))),columns=Mercado3c.columns))
+            Mercado3c=Mercado3c.append(pd.DataFrame(np.zeros(((self.numOpc-len(Mercado3c)),len(Mercado3c.columns))),columns=Mercado3c.columns))
             Mercado3p=Mercado2p[Mercado2p.Date.astype('datetime64')==d]#.sort_values('PriceToStrike0')
             Mercado3p=Mercado3p[Mercado3p.dia_1!=Mercado3p.Date]
-            Mercado3p=Mercado3p.append(pd.DataFrame(np.zeros(((self.numselfc-len(Mercado3p)),len(Mercado3p.columns))),columns=Mercado3p.columns))
+            Mercado3p=Mercado3p.append(pd.DataFrame(np.zeros(((self.numOpc-len(Mercado3p)),len(Mercado3p.columns))),columns=Mercado3p.columns))
             show=show+[Mercado3c.append(Mercado3p)]
 
         self.dataspace=kdate
@@ -198,7 +198,7 @@ class OptinsBases:
         self.StateCont=0
         self.last_Q=np.zeros(len(self.StateList[0]))
 
-        if sum(self.StateList[0].Security==0)<12 or (len(self.StateList)>2 or ((self.StateList[0]['Date']==self.StateList[0]['EXPIR_DATE']).sum()>0) or len(self.StateList)>2):
+        if (sum(self.StateList[0].Security==0)<12 or len(self.StateList)>2) and (((self.StateList[0]['Date']==self.StateList[0]['EXPIR_DATE']).sum()>0) or len(self.StateList)>2):
             print('Change the days')
             
         return(TratamentoStado(self.Ambiente,self.StateList[self.StateCont]))
@@ -273,7 +273,7 @@ class OptinsBases:
             self.StateCont=0
             self.last_Q=np.zeros(len(self.StateList[0]))
 
-            if sum(self.StateList[0].Security==0)<12 or (len(self.StateList)>2 or ((self.StateList[0]['Date']==self.StateList[0]['EXPIR_DATE']).sum()>0) or len(self.StateList)>2):
+            if (sum(self.StateList[0].Security==0)<12 or len(self.StateList)>2) and (((self.StateList[0]['Date']==self.StateList[0]['EXPIR_DATE']).sum()>0) or len(self.StateList)>2):
                 tamanho=len(self.StateList[0])
             
         return(TratamentoStado(self.Ambiente,self.StateList[self.StateCont]))
